@@ -16,10 +16,10 @@ const SignIn = () => {
 
     setIsSubmitting(true);
     try {
-      // Backend será ligado mais tarde
+      // Quando o backend for implementado, validar aqui
       router.replace('/(tabs)');
     } catch (error: any) {
-      Alert.alert('Error', error.message);
+      Alert.alert('Erro', error.message);
     } finally {
       setIsSubmitting(false);
     }
