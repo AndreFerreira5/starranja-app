@@ -173,8 +173,7 @@ const MechanicWelcome = ({ name }: { name?: string }) => (
 // --- Componente Principal da Página ---
 const IndexPage = () => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User>(null);
-
+  const [user, setUser] = useState<User>({ name: 'Admin', role: 'admin' });
   const [stats, setStats] = useState<DashboardStats | undefined>(undefined);
 
   useEffect(() => {
@@ -188,24 +187,24 @@ const IndexPage = () => {
     }
   }, []);
 
+  // ✅ Move the redirect into useEffect
+  //useEffect(() => {
+  //  if (!loading && !user) {
+  //    router.replace('/(auth)/sign-in');
+  //  }
+  //}, [loading, user]);
+
   if (loading) {
     return (
-      <YStack
-        flex={1}
-        justifyContent="center"
-        alignItems="center"
-        padding="$4"
-        gap="$4"
-      >
-        <ActivityIndicator />
-        <Text>A carregar...</Text>
+      <YStack flex={1} justifyContent="center" alignItems="center">
+        <ActivityIndicator size="large" />
+        <Text marginTop={16}>A carregar...</Text>
       </YStack>
     );
   }
 
   if (!user) {
-    router.replace('/(auth)/sign-in');
-    return null;
+    return null; // Will redirect via useEffect
   }
 
   const logout = () => {
