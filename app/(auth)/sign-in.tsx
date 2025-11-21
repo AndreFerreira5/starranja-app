@@ -8,22 +8,17 @@ const SignIn = () => {
   const [form, setForm] = useState({ username: '', password: '' });
 
   const submit = async () => {
-    const { username, password } = form;
-
-    if (!username || !password) {
-      return Alert.alert('Erro', 'Introduza um nome de utilizador e palavra-passe válidos.');
-    }
-
-    setIsSubmitting(true);
-    try {
-      // Backend será ligado mais tarde
-      router.replace('/(tabs)');
-    } catch (error: any) {
-      Alert.alert('Error', error.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  // Skip validation during development
+  setIsSubmitting(true);
+  try {
+    // Backend será ligado mais tarde
+    router.replace('/(tabs)');
+  } catch (error: any) {
+    Alert.alert('Error', error.message);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <YStack
