@@ -2,23 +2,42 @@ import { Button, Input, YStack, Text } from 'tamagui';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { apiClient } from '@/api/client';
 
 const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ username: '', password: '' });
 
   const submit = async () => {
-  // Skip validation during development
-  setIsSubmitting(true);
-  try {
-    // Backend será ligado mais tarde
-    router.replace('/(tabs)');
-  } catch (error: any) {
-    Alert.alert('Error', error.message);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    // Validação básica
+    if (!form.username || !form.password) {
+      Alert.alert('Erro', 'Preencha todos os campos');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      console.log('Iniciando login...');
+      // Chama o endpoint /auth/login
+      const response = await apiClient.post('/auth/login', {
+        username: form.username,
+        password: form.password,
+      });
+
+      console.log('Login bem-sucedido:', response);
+
+      // Guarda o token no AsyncStorage
+      await AsyncStorage.setItem('access_token', response.access_token);
+
+      // Redireciona para a app
+      router.replace('/(tabs)');
+    } catch (error: any) {
+      Alert.alert('Erro', error.message || 'Credenciais inválidas');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <YStack
