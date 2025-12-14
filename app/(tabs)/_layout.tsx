@@ -8,6 +8,7 @@ import {
   Users 
 } from 'lucide-react-native';
 import { useTheme } from 'tamagui';
+import { useTokenRefresh } from '@/api/useTokenRefresh';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -15,6 +16,8 @@ export default function TabLayout() {
 
   const iconColor = theme.color?.get() || (colorScheme === 'dark' ? '#fff' : '#000');
   const activeIconColor = theme.orange?.get() || 'orange';
+  
+  useTokenRefresh();
 
   return (
     <Tabs
