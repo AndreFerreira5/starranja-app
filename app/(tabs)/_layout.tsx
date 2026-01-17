@@ -73,6 +73,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="configuracoes"
+        options={{
+          title: 'Configurações',
+          tabBarIcon: ({ color, focused }) => (
+            <Users size={24} color={color} strokeWidth={focused ? 2.5 : 2} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
