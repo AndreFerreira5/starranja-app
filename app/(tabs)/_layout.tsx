@@ -5,7 +5,8 @@ import {
   Calendar, 
   ListTodo, 
   Package, 
-  Users 
+  Users, 
+  Settings
 } from 'lucide-react-native';
 import { useTheme } from 'tamagui';
 import { useTokenRefresh } from '@/api/useTokenRefresh';
@@ -73,6 +74,15 @@ export default function TabLayout() {
           title: 'Clientes',
           tabBarIcon: ({ color, focused }) => (
             <Users size={24} color={color} strokeWidth={focused ? 2.5 : 2} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="configuracoes"
+        options={{
+          title: 'Configurações',
+          tabBarIcon: ({ color, focused }) => (
+            <Settings size={24} color={color} strokeWidth={focused ? 2.5 : 2} />
           ),
         }}
       />

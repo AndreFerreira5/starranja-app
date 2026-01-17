@@ -69,7 +69,7 @@ const makeRequest = async (
   
   const requestOptions: RequestInit = {
     ...options,
-    credentials: 'include',
+    credentials: 'include', // Importante para cookies de refresh token
     headers: {
       'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),
@@ -79,6 +79,7 @@ const makeRequest = async (
 
   const response = await fetchWithTimeout(url, requestOptions);
 
+  // Lógica de Refresh Token (401 Unauthorized)
   if (response.status === 401 && retryCount === 0) {
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
@@ -111,6 +112,11 @@ const makeRequest = async (
     }
   }
 
+  // Verifica se é um DELETE com 204 (Sucesso sem conteúdo)
+  if (response.status === 204) {
+    return null;
+  }
+
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.detail || 'Erro na requisição');
@@ -137,6 +143,7 @@ export const apiClient = {
 
   patch: async (endpoint: string, data: any) => {
     const url = `${API_BASE_URL}${endpoint}`;
+    console.log('PATCH Request:', url);
     return makeRequest(url, {
       method: 'PATCH',
       body: JSON.stringify(data),
@@ -145,6 +152,7 @@ export const apiClient = {
 
   delete: async (endpoint: string) => {
     const url = `${API_BASE_URL}${endpoint}`;
+    console.log('DELETE Request:', url);
     return makeRequest(url, { method: 'DELETE' });
   },
 };
