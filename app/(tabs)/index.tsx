@@ -58,7 +58,7 @@ const StatCard = ({title, content, clickable = false, onPressRoute,}: {title: st
         activeOpacity={0.7}
         onPress={() => {
           if (onPressRoute) {
-            router.replace(onPressRoute);
+            router.push(onPressRoute);
           } else {
             Alert.alert('Em desenvolvimento');
           }
@@ -100,14 +100,14 @@ const ManagerAdminDashboard = ({clickable, stats,}: {clickable: boolean;stats?: 
         title="Veículos em Serviço"
         content={stats?.vehiclesInService}
         clickable={clickable}
-        onPressRoute="/(dashboard)/vehicles"
+        onPressRoute="/vehicles"
       />
 
       <StatCard
         title="Carga de Trabalho"
         content={stats?.workloadOccupied}
         clickable={clickable}
-        onPressRoute="/(dashboard)/workload"
+        onPressRoute="/workload"
       />
     </XStack>
 
@@ -116,13 +116,13 @@ const ManagerAdminDashboard = ({clickable, stats,}: {clickable: boolean;stats?: 
         title="Marcações da Semana"
         content={stats?.bookingsThisWeek}
         clickable={clickable}
-        onPressRoute="/(dashboard)/bookings"
+        onPressRoute="/bookings"
       />
       <StatCard
         title="Peças Pendentes"
         content={stats?.pendingParts}
         clickable={clickable}
-        onPressRoute="/(dashboard)/deliveries"
+        onPressRoute="/deliveries"
       />
     </XStack>
 
@@ -131,13 +131,13 @@ const ManagerAdminDashboard = ({clickable, stats,}: {clickable: boolean;stats?: 
         title="Faturação do Mês"
         content={stats?.billingMonth}
         clickable={clickable}
-        onPressRoute="/(dashboard)/billing"
+        onPressRoute="/billing"
       />
       <StatCard
         title="Alertas"
         content={stats?.alertsCount}
         clickable={clickable}
-        onPressRoute="/(dashboard)/alerts"
+        onPressRoute="/alerts"
       />
     </XStack>
 
@@ -186,13 +186,6 @@ const IndexPage = () => {
       setLoading(false);
     }
   }, []);
-
-  // ✅ Move the redirect into useEffect
-  //useEffect(() => {
-  //  if (!loading && !user) {
-  //    router.replace('/(auth)/sign-in');
-  //  }
-  //}, [loading, user]);
 
   if (loading) {
     return (
