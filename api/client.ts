@@ -118,8 +118,27 @@ const makeRequest = async (
   }
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Erro na requisição');
+    const errorData = await response.json();
+    
+    // LOG IMPORTANTE PARA DEBUG
+    console.error('API Error Response:', {
+      url,
+      status: response.status,
+      data: errorData
+    });
+
+    let errorMessage: string;
+    
+    // Tratamento para quando 'detail' é um objeto (ex: erro de conflito)
+    if (typeof errorData.detail === 'object' && errorData.detail !== null) {
+      errorMessage = errorData.detail.message || JSON.stringify(errorData.detail);
+    } else if (typeof errorData.detail === 'string') {
+      errorMessage = errorData.detail;
+    } else {
+      errorMessage = JSON.stringify(errorData);
+    }
+    
+    throw new Error(errorMessage);
   }
 
   return response.json();
