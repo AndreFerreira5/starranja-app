@@ -27,7 +27,7 @@ export interface UpdateUserData {
 const AUTH_PREFIX = '/auth';
 
 export const usersApi = {
-  // GET all users (nao está criado ainda este endpoint no backend)
+  // GET all users
   getAll: async (): Promise<User[]> => {
     return apiClient.get('/users');
   },
