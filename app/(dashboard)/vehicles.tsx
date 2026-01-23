@@ -11,7 +11,6 @@ import {
   ScrollView,
   Spinner,
   useTheme,
-  Button,
 } from 'tamagui';
 import { AlertCircle } from 'lucide-react-native';
 
